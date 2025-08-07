@@ -27,8 +27,8 @@ describe('Fazer uma requisição do tipo post para inserir uma conta', () =>{
                 }).as('response')
 
             cy.get('@response').then(res => {
-                expect(res.status).to.be.equal(201)
-                expect(res.body).to.have.property('id')
+                expect(res.status).to.be.equal(201) 
+                expect(res.body).to.have.property('id') 
                 expect(res.body).to.have.property('nome', 'Conta via rest')
             })
     })
