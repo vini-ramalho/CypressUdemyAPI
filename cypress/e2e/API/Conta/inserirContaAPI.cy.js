@@ -9,6 +9,10 @@ before(() =>{
         })
 })
 
+beforeEach(() =>{
+    cy.resetRest(token)
+})
+
 describe('Fazer uma requisição do tipo post para inserir uma conta', () =>{
 
     it('Deve criar uma conta com sucesso', () =>{
@@ -16,7 +20,7 @@ describe('Fazer uma requisição do tipo post para inserir uma conta', () =>{
                 cy.request({
                     method: 'POST',
                     headers:{Authorization: `JWT ${token}`},
-                    url: 'https://barrigarest.wcaquino.me/contas',
+                    url: '/contas',
                     body:{
                         nome:'Conta via rest'
                     }

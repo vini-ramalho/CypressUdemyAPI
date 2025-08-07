@@ -6,7 +6,7 @@ describe('Fazer uma requisição do tipo post para login', () =>{
 
         cy.request({
             method: 'POST',
-            url: 'http://barrigarest.wcaquino.me/signin',
+            url: '/signin',
             body:{
                 email: "alvesferreira.rvinicius@gmail.com",
                 redirecionar: false,
