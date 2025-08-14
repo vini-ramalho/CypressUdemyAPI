@@ -46,3 +46,22 @@ Cypress.Commands.add('resetRest', (token) =>{
         headers: {Authorization: `JWT ${token}`}
     }).its('status').should('be.equal', 200)
 })
+
+
+//Recupera o ID da conta através do Nome
+Cypress.Commands.add('getContaByName', (name) =>{
+        cy.getToken('alvesferreira.rvinicius@gmail.com', 'meg').then((token) =>{
+                cy.request({
+                    method: 'GET',
+                    url:'/contas',
+                    headers: {Authorization: `JWT ${token}`},
+                    qs:{
+                        nome: name  
+                    }              
+                }).then((res =>{
+                    return res.body[0].id
+                }))
+
+        })
+
+})

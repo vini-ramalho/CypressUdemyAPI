@@ -16,18 +16,10 @@ beforeEach(() =>{
 describe ('Deve realizar alteração da conta via API rest', () =>{
 
     it('Deve altera a conta via API rest com sucesso', () =>{
-        cy.request({
-            method: 'GET',
-            url:'/contas',
-            headers: {Authorization: `JWT ${token}`},
-            qs:{
-                nome: 'Conta para alterar'  
-            }   //Foi necessário realizar essa requisição para recuperar o ID da conta com nome 'Conta para alterar'
-            
-        }).then (res =>{
+        cy.getContaByName('Conta para alterar').then (res =>{
             cy.request({
                 method: 'PUT',
-                url: `/contas/${res.body[0].id}`,  // Aqui o ID recuperado foi utilizado
+                url: `/contas/${res}`,  // Aqui o ID recuperado foi utilizado
                 headers: {Authorization: `JWT ${token}`},
                 body:{
                     nome: 'Conta alterada via rest'

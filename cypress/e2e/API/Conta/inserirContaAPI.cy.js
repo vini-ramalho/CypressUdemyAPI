@@ -33,7 +33,7 @@ describe('Inserção de contas via API', () =>{
     })
 
     it('Não deve permitir criar uma conta com nome duplicado', () =>{
-                        cy.request({
+                cy.request({
                     method: 'POST',
                     headers:{Authorization: `JWT ${token}`},
                     url: '/contas',
