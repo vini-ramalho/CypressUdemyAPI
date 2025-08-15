@@ -18,12 +18,7 @@ beforeEach(() =>{
 describe('Deve verificar o saldo', () => {
 
     it('Deve verificar o saldo da conta com sucesso', () => {
-        cy.request({
-            url:'/saldo',
-            method:'GET',
-            headers: {Authorization: `JWT ${token}`},
-
-        }).then(res =>{
+        cy.getSaldo().then(res =>{
             let saldoConta = null
 
             res.body.forEach(C =>{
@@ -56,12 +51,7 @@ describe('Deve verificar o saldo', () => {
             }).as('response')
             cy.get('@response').its('status').should('be.equal', 200)
 
-        cy.request({
-            url:'/saldo',
-            method:'GET',
-            headers: {Authorization: `JWT ${token}`},
-
-            }).then(res =>{
+            cy.getSaldo().then(res =>{
                 let saldoConta = null
 
                 res.body.forEach(C =>{

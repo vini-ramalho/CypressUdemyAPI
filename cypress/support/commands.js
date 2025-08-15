@@ -65,3 +65,16 @@ Cypress.Commands.add('getContaByName', (name) =>{
         })
 
 })
+
+Cypress.Commands.add('getSaldo', () => {
+           cy.getToken('alvesferreira.rvinicius@gmail.com', 'meg').then((token) =>{
+                cy.request({
+                    url:'/saldo',
+                    method:'GET',
+                    headers: {Authorization: `JWT ${token}`},
+                })
+
+           })
+    
+
+})
