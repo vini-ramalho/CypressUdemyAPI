@@ -35,16 +35,18 @@ Cypress.Commands.add('getToken', (user, password) =>{
             }
         }).its('body.token').should('not.be.empty')
             .then(token =>{
+                Cypress.env('token', token)
                 return token
             })
 })
 
-Cypress.Commands.add('resetRest', (token) =>{
-    cy.request({
-        method: 'GET',
-        url: '/reset',
-        headers: {Authorization: `JWT ${token}`}
+Cypress.Commands.add('resetRest', () =>{
+    cy.getToken('alvesferreira.rvinicius@gmail.com', 'meg').then(token =>{
+        cy.request({
+            method: 'GET',
+            url: '/reset',
     }).its('status').should('be.equal', 200)
+    })
 })
 
 
@@ -54,7 +56,6 @@ Cypress.Commands.add('getContaByName', (name) =>{
                 cy.request({
                     method: 'GET',
                     url:'/contas',
-                    headers: {Authorization: `JWT ${token}`},
                     qs:{
                         nome: name  
                     }              
@@ -71,10 +72,20 @@ Cypress.Commands.add('getSaldo', () => {
                 cy.request({
                     url:'/saldo',
                     method:'GET',
-                    headers: {Authorization: `JWT ${token}`},
                 })
 
            })
-    
+})
 
+Cypress.Commands.overwrite('request', (originalFnc, ...options) =>{
+    if(options.length === 1){
+        if(Cypress.env('token')) {
+            console.log(options)
+            options[0].headers = {
+                Authorization: `JWT ${Cypress.env('token')}`
+            }
+        }
+    }
+
+    return originalFnc(...options)
 })

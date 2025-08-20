@@ -2,17 +2,14 @@
 
 import dayjs from 'dayjs';
 
-let token
 
 before(() =>{
      cy.getToken('alvesferreira.rvinicius@gmail.com', 'meg')
-        .then(tkn => {
-            token = tkn
-        })
+
 })
 
 beforeEach(() =>{
-    cy.resetRest(token)
+    cy.resetRest()
 })
 
 describe('Deve verificar o saldo', () => {
@@ -32,13 +29,11 @@ describe('Deve verificar o saldo', () => {
         cy.request({
             method:'GET',
             url:'/transacoes',
-            headers: {Authorization: `JWT ${token}`},
             qs:{ descricao: 'Movimentacao 1, calculo saldo'}
         }).then(res =>{
             cy.request({
                 method:'PUT',
                 url:`/transacoes/${res.body[0].id}`,
-                headers: {Authorization: `JWT ${token}`},
                 body:{
                     status:true,
                     data_transacao: dayjs(res.body[0].data_transacao).format('DD/MM/YYYY'),

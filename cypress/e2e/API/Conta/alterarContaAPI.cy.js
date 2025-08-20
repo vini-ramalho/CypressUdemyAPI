@@ -1,16 +1,12 @@
 /// <reference types='cypress'/>
 
-let token
-
 before(() =>{
      cy.getToken('alvesferreira.rvinicius@gmail.com', 'meg')
-        .then(tkn => {
-            token = tkn
-        })
+
 })
 
 beforeEach(() =>{
-    cy.resetRest(token)
+    cy.resetRest()
 })
 
 describe ('Deve realizar alteração da conta via API rest', () =>{
@@ -20,7 +16,6 @@ describe ('Deve realizar alteração da conta via API rest', () =>{
             cy.request({
                 method: 'PUT',
                 url: `/contas/${res}`,  // Aqui o ID recuperado foi utilizado
-                headers: {Authorization: `JWT ${token}`},
                 body:{
                     nome: 'Conta alterada via rest'
                 }

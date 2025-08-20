@@ -2,17 +2,13 @@
 
 import dayjs from 'dayjs';
 
-let token
 
 before(() =>{
      cy.getToken('alvesferreira.rvinicius@gmail.com', 'meg')
-        .then(tkn => {
-            token = tkn
-        })
 })
 
 beforeEach(() =>{
-    cy.resetRest(token)
+    cy.resetRest()
 })
 
 describe('Inserção de movimentações via API', () =>{
@@ -22,7 +18,6 @@ describe('Inserção de movimentações via API', () =>{
             cy.request({
                 method: 'POST',
                 url: '/transacoes',
-                headers: {Authorization: `JWT ${token}`},
                 body:{
                     conta_id: contaID,
                     data_pagamento: dayjs().add(1, 'day').format('DD/MM/YYYY'),
