@@ -29,9 +29,9 @@ Cypress.Commands.add('getToken', (user, password) =>{
             method: 'POST',
             url: '/signin',
             body:{
-                email: "alvesferreira.rvinicius@gmail.com",
+                email: user,
                 redirecionar: false,
-                senha: "meg"
+                senha: password
             }
         }).its('body.token').should('not.be.empty')
             .then(token =>{
